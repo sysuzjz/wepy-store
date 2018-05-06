@@ -14,6 +14,9 @@
 3. vuex的action包括 getter、mutation、action三部分，但是我在使用的过程中发现mutation并不是十分必要。所以本状态管理器去掉了mutation这一部分，开发者可以直接在action第一个参数里获取setState方法，直接设置getter。至于getter的获取，也没有专门独立出来，而是根据setState，即getState和setState是对应的。
 4. vuex的action可以直接获取整个store树，但本状态管理器没有，因为没有做写权限限制，万一开发者误操作，将使整颗store树被污染。我只暴露出来getState方法和setState方法，都是只能操作单个state，避免全局污染。
 
+## 兼容性
+本状态管理器使用ES6语法编写。因此需要在wepy.config.js中配置好相应的babel插件
+
 ## API
 提供了四个开放API和一个内置API，分别是：
 1. getState
@@ -130,3 +133,12 @@
 详见demo
 
 ***注意***：demo是从整个项目中剥离的，原项目将源码划分为api（负责请求）、page（页面）、components（组件）、store（状态管理器）等多个模块。因此剥离出来的部分可能会部分报错，但使用方法不变。
+
+## 谁在使用
+小程序：
+
+【花海仓-分销版】（以后可能去除横杆）
+
+【品仓优选】（有可能胎死腹中，因为目前还没发版囧）
+
+以及后续花海仓所有的小程序，都将使用同一套技术架构，使用本状态管理器。
