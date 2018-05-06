@@ -1,4 +1,4 @@
-import testModule from './modules/address'
+import testModule from './demo/advertising'
 
 // import相关模块后添加进actions对象，也可以用Object.assign
 // 最理想的是使用遍历方式，没法实现只能用这种替代方案

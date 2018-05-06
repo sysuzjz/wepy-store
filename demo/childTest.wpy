@@ -1,0 +1,38 @@
+<style lang="stylus">
+</style>
+
+<template lang="pug">
+view
+	text child: {{child.name}}
+</template>
+
+<script>
+import wepy from 'wepy'
+import {mapGetters} from '../index'
+import {advertisingTypes} from './types'
+
+export default class Rule extends wepy.component {
+	config = {}
+
+	components = {}
+
+	props = {
+		num: Object
+	}
+
+	data = {}
+
+	computed = {
+		...mapGetters({
+			child: advertisingTypes.DEMO_TEST
+		})
+	}
+
+	methods = {
+	}
+
+	events = {}
+
+	onLoad() {}
+}
+</script>

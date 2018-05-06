@@ -1,0 +1,73 @@
+<style lang="stylus"></style>
+
+<template lang="pug">
+view
+	view 子组件数据来源于父组件的请求。隔三秒后请求
+	child
+	view 以下是父组件数据。以广告接口为例
+	repeat(for="{{adsArr}}", item="zone")
+		repeat(for="{{zone}}", item="ad")
+			view 广告位{{ad.zone_id}}第{{index + 1}}个广告{{ad.bannerid}}
+</template>
+
+<script>
+import wepy from 'wepy'
+import child from './childTest'
+import {advertisingTypes} from './types'
+import {mapGetters, mapActions} from '../index'
+
+export default class Demo extends wepy.page {
+	config = {}
+
+	components = {
+		child
+	}
+
+	data = {
+	}
+
+	computed = {
+		...mapGetters({
+			ads: {
+				type: advertisingTypes.AD_DATA,
+				defaultState: {}
+			}
+		}),
+		adsArr () {
+			const result = []
+			if (this.ads) {
+				Object.keys(this.ads).forEach((zoneId) => {
+					const zoneArr = []
+					this.ads[zoneId].forEach((ad) => {
+						zoneArr.push(ad)
+					})
+					result.push(zoneArr)
+				})
+			}
+			return result
+		}
+	}
+
+	methods = {
+		...mapActions([
+			advertisingTypes.GET_ADS,
+			advertisingTypes.DEMO_TEST
+		])
+	}
+
+	events = {}
+
+	onLoad(option) {
+		this.methods[advertisingTypes.GET_ADS]({
+			zoneId: '123, 321'
+		})
+
+		// 子组件的请求，隔3秒后再请求
+		setTimeout(() => {
+			this.methods[advertisingTypes.DEMO_TEST]({
+				abc: 'child data'
+			})
+		}, 3000)
+	}
+}
+</script>
